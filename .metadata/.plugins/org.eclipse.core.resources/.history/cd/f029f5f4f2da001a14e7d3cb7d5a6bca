@@ -1,0 +1,70 @@
+package org.unibl.etf.attacks;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+
+import javax.servlet.http.HttpServletRequest;
+
+public class DoSAttacks {
+
+	public static final Object lock = new Object();
+	public static final List<String> blocekdAddresses = new ArrayList<String>();
+	public static boolean isHttpSlowAttack = false;
+	private static final Map<String, Integer> requestFromRemoteAddress = new HashMap<String, Integer>();
+
+	private static Timer timer;
+	static {
+
+		timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				synchronized (DoSAttacks.lock) {
+					if (LoggerAttacks.getLogger() != null) {
+						requestFromRemoteAddress.entrySet().stream()
+								.filter(f -> f.getValue() >= RequestInspect.MAX_NUMBER_OF_REQUEST).forEach(address -> {
+									LoggerAttacks.getLogger().log(Level.WARNING,
+											"Http slow attack from: " + address.getKey());
+									isHttpSlowAttack = true;
+									blocekdAddresses.add(address.getKey());
+								});
+						requestFromRemoteAddress.clear();
+					}
+				}
+			}
+		}, 0, RequestInspect.MAX_WAIT_TO_READ);
+	}
+
+	public static void checkHttpSlowAttack(HttpServletRequest request) {
+		synchronized (DoSAttacks.lock) {
+
+			if (!blocekdAddresses.contains(request.getRemoteAddr())) {
+
+				if (!requestFromRemoteAddress.containsKey(request.getRemoteAddr())) {
+					//System.out.println("USLO DA STAVI PUT NA 1 :D ");
+					requestFromRemoteAddress.put(request.getRemoteAddr(), 1);
+
+				} else {
+					//System.out.println("USLO U a + b");
+					requestFromRemoteAddress.merge(request.getRemoteAddr(), 1, (a, b) -> a + b);
+
+				}
+
+				if (requestFromRemoteAddress.get(request.getRemoteAddr()) > RequestInspect.MAX_NUMBER_OF_REQUEST) {
+					LoggerAttacks.getLogger().log(Level.WARNING,
+							"Http slow attack from: " + request.getRemoteAddr());
+					isHttpSlowAttack = true;
+					requestFromRemoteAddress.remove(request.getRemoteAddr());
+					System.out.println("BIO JE NAPAD ");
+				}
+			} else {
+				isHttpSlowAttack = true;
+			}
+		}
+	}
+}

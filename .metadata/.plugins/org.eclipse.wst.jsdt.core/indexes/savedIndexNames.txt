@@ -1,0 +1,10 @@
+INDEX VERSION 1.4+C:\Users\djord\OneDrive\Desktop\Pismeni IP\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3830068222.index
+2788819085.index
+1292155619.index
+3312008847.index
+3873288780.index
+3391784649.index
+1974452456.index
+2835281661.index
+2982690279.index

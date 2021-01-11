@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;org.unibl.etf.controller&apos; to &apos;Firewall/src&apos;&#x0D;&#x0A;- Original project: &apos;AdminSNIApp&apos;&#x0D;&#x0A;- Destination element: &apos;Firewall/src&apos;&#x0D;&#x0A;- Original element: &apos;AdminSNIApp/src/org.unibl.etf.controller&apos;" description="Copy package" destination="=Firewall/src" element1="/src&lt;org.unibl.etf.controller" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1597058032836" version="1.0"/>
+</session>

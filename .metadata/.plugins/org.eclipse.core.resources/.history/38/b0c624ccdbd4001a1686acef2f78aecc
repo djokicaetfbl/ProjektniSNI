@@ -1,0 +1,87 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Manage accounts</title>
+<link href="styles/style.css" type="text/css" rel="stylesheet">
+<!-- <script src="script/index.js"></script> -->
+</head>
+<!-- <body onload="loadData()">	-->
+<body>
+
+	<nav>
+	<div>
+	<h1>Manage accounts</h1>
+		<form action="?action=logout" method="post">
+			<input style="font-weight: bold;"  type="submit" value="Logout" />
+		</form>
+	</div>
+	</nav>
+	
+	<div>
+	<table id="usersDatatable" class="table">
+	<thead>
+            <tr>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Roles</th>
+                <th>Active</th>
+            </tr>
+        </thead>
+		<tbody>
+			<tr>
+				<td>test</td>
+				<td>test</td>
+				<td>test</td>
+				<td>1</td>
+			</tr>
+		
+		</tbody>
+ 	</table>
+ 	
+ 	  
+ 	<script type="text/javascript">
+	
+	const userDatatableConst = document.querySelector("#usersDatatable > tbody");
+	
+	function loadUsers(){
+	
+	var request = new XMLHttpRequest();
+	
+    request.open("GET", "api/user", true);
+    
+	request.onreadystatechange = function (){
+        if ((request.readyState == 4) && (request.status == 200)) {
+            var allUsers = JSON.parse(request.responseText);
+            populateTable(allUsers);
+
+        }
+    }
+    
+    	request.send();
+	}
+	
+	function populateTable(allUsers){
+		console.log(allUsers);
+		
+		while(userDatatableConst.firstChild) {
+			userDatatableConst.removeChild(userDatatableConst.firstChild);  
+		}
+		
+		allUsers.forEach((row) => {
+			console.log(row);
+		});
+	}
+	
+	document.addEventListener("DOMContentLoaded", () => { loadUsers();  });
+	
+	</script>
+ 	
+	</div>
+	
+	
+
+</body>
+</html>

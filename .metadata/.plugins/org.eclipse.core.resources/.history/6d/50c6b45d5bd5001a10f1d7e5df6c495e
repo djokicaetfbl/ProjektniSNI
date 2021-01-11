@@ -1,0 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Manage articles</title>
+</head>
+<body>
+	<nav>
+	<div>
+	<h1>Manage articles</h1>
+		<form action="?action=logout" method="post">
+			<input style="font-weight: bold;"  type="submit" value="Logout" />
+		</form>
+	</div>
+	</nav>
+</body>
+</html>
